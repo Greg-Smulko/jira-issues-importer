@@ -49,7 +49,7 @@ I took these as a starting point for this project. I restructured the code and a
 * clone this repository
 * run `pip install -r requirements.txt`
 * export the desired JIRA issues of your project (see section below)
-* to start the Github import, execute 'python main.py'
+* to start the Github import, execute `python3 main.py`
 * edit the `labelcolourselector.py` if you want to change the logic of how the colours are set on labels
 * on startup it will ask for
   * the JIRA XML export file name (use a semi-colon to enter multiple XML paths)
