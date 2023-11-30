@@ -93,7 +93,7 @@ class Importer:
         print
 
         for lkey in self.project.get_all_labels().keys():
-            data = {'name': lkey,
+            data = {'name': lkey.lower(),
                     'color': colourSelector.get_colour(lkey)}
             r = requests.post(label_url, json=data, auth=(
                 self.options.user, self.options.passwd), timeout=Importer._DEFAULT_TIME_OUT)

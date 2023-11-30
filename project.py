@@ -114,22 +114,24 @@ class Project:
     def _add_labels(self, item):
         try:
             self._project['Components'][item.component.text] += 1
-            self._project['Issues'][-1]['labels'].append(item.component.text)
+            self._project['Issues'][-1]['labels'].append(item.component.text.lower())
         except AttributeError:
             pass
         
         try:
             for label in item.labels.label:
-                self._project['Labels'][label.text] += 1
-                self._project['Issues'][-1]['labels'].append(label.text)
+                self._project['Labels'][label.text.lower()] += 1
+                self._project['Issues'][-1]['labels'].append(label.text.lower())
         except AttributeError:
             pass
 
         try:
             self._project['Types'][item.type.text] += 1
-            self._project['Issues'][-1]['labels'].append(item.type.text)
+            self._project['Issues'][-1]['labels'].append(item.type.text.lower())
         except AttributeError:
             pass
+
+        self._project['Issues'][-1]['labels'] = list(set(self._project['Issues'][-1]['labels']))
 
     def _add_comments(self, item):
         try:
