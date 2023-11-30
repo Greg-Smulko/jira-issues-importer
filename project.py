@@ -41,7 +41,7 @@ class Project:
 
         self._append_item_to_project(item)
 
-        self._add_milestone(item)
+        # self._add_milestone(item)
 
         self._add_labels(item)
 

@@ -123,10 +123,10 @@ class Importer:
 
             print("Index = ", count)
 
-            if 'milestone_name' in issue:
-                issue['milestone'] = self.project.get_milestones()[
-                    issue['milestone_name']]
-                del issue['milestone_name']
+            # if 'milestone_name' in issue:
+            #     issue['milestone'] = self.project.get_milestones()[
+            #         issue['milestone_name']]
+            #     del issue['milestone_name']
 
             self.convert_relationships_to_comments(issue)
 

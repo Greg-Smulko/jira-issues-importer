@@ -50,7 +50,7 @@ Steps:
 importer = Importer(opts, project)
 colourSelector = LabelColourSelector(project)
 
-importer.import_milestones()
+# importer.import_milestones()
 
 if int(start_from_issue) == 0:
     importer.import_labels(colourSelector)
