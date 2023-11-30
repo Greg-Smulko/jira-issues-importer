@@ -2,6 +2,7 @@ import requests
 import random
 import time
 import re
+import json
 
 
 class Importer:
@@ -155,8 +156,7 @@ class Importer:
         headers = {'Accept': 'application/vnd.github.golden-comet-preview+json'}
         response = self.upload_github_issue(issue, comments, headers)
         status_url = response.json()['url']
-        gh_issue_url = self.wait_for_issue_creation(
-            status_url, headers).json()['issue_url']
+        gh_issue_url = self.wait_for_issue_creation(status_url, headers, issue).json()['issue_url']
         gh_issue_id = int(gh_issue_url.split('/')[-1])
         issue['githubid'] = gh_issue_id
         #print("\nGithub issue id: ", gh_issue_id)
@@ -183,7 +183,7 @@ class Importer:
                 .format(issue['title'], response.status_code, response.json())
             )
 
-    def wait_for_issue_creation(self, status_url, headers):
+    def wait_for_issue_creation(self, status_url, headers, issue):
         """
         Check the status of a GitHub issue import.
         If the status is 'pending', it sleeps, then rechecks until the status is
@@ -209,8 +209,8 @@ class Importer:
             print("Imported Issue:", response.json()['issue_url'])
         elif status == 'failed':
             raise RuntimeError(
-                "Failed to import GitHub issue due to the following errors:\n{}"
-                .format(response.json())
+                "Failed to import GitHub issue\n{}\n due to the following errors:\n{}"
+                .format(json.dumps(issue), response.json())
             )
         else:
             raise RuntimeError(
