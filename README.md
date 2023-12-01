@@ -80,6 +80,10 @@ I took these as a starting point for this project. I restructured the code and a
 
 1. Right-click `XML` and select `Save link as...` (do not click it directly when exporting lots of data, otherwise your browser may die)
 
+## Attachments
+
+Attachments are stored on a disk, i.e. in `/var/jira/data/attachments/PRO` folder (a folder per project).
+
 # Misc
 
 * Delete all default labels added to a new GitHub repo with:
