@@ -1,6 +1,7 @@
 from collections import defaultdict
 from html.entities import name2codepoint
 from dateutil.parser import parse
+from lxml.etree import tostring
 import re
 
 
@@ -28,6 +29,7 @@ class Project:
         merge = self._project['Components'].copy()
         merge.update(self._project['Labels'])
         merge.update(self._project['Types'])
+        merge['has_attachment'] = 0
         return merge
 
     def add_item(self, item):
@@ -81,9 +83,19 @@ class Project:
             except AttributeError:
                 pass
 
+        body = self._htmlentitydecode(item.description.text)
+
+        try:
+            attachment = item.attachments.attachment
+            body += '\n\n```attachments\n' + tostring(item.attachments, pretty_print=True, encoding='unicode') + '\n```\n\n'
+        except AttributeError:
+            pass
+        
+        body += '\n<i>' + item.title.text[0:item.title.text.index("]") + 1] + ' created by ' + item.reporter.get('username') + '</i>'
+
         self._project['Issues'].append({'title': item.title.text,
                                         'key': item.key.text,
-                                        'body': self._htmlentitydecode(item.description.text) + '\n<i>' + item.title.text[0:item.title.text.index("]") + 1] + ' created by ' + item.reporter.get('username') + '</i>',
+                                        'body': body,
                                         'created_at': self._convert_to_iso(item.created.text),
                                         'closed_at': closed_at,
                                         'updated_at': self._convert_to_iso(item.updated.text),
@@ -128,6 +140,12 @@ class Project:
         try:
             self._project['Types'][item.type.text] += 1
             self._project['Issues'][-1]['labels'].append(item.type.text.lower())
+        except AttributeError:
+            pass
+
+        try:
+            attachment = item.attachments.attachment
+            self._project['Issues'][-1]['labels'].append('has_attachment')
         except AttributeError:
             pass
 
