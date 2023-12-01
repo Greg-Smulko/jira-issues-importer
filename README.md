@@ -74,11 +74,11 @@ I took these as a starting point for this project. I restructured the code and a
 
 1. Select project you are interested in
 
-1. Specify Query criteria, Sort as needed, if you have more than 1000 items use something like eg. `issuekey < PRO-1000 AND issuekey > PRO-2000` to select a range and export each set into separate XML files
+1. Specify Query criteria, Sort as needed (recommended from oldest), if you have more than 1000 items use something like eg. `project = PRO and issuekey >= PRO-1000 AND issuekey < PRO-2000 ORDER BY key ASC` to select a range and export each set into separate XML files
 
 1. From results page, click on Export icon at the top right of page
 
-1. Select XML output and save file
+1. Right-click `XML` and select `Save link as...` (do not click it directly when exporting lots of data, otherwise your browser may die)
 
 # Misc
 
