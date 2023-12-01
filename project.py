@@ -83,15 +83,15 @@ class Project:
             except AttributeError:
                 pass
 
-        body = self._htmlentitydecode(item.description.text)
+
+        body = '<i>' + item.title.text[0:item.title.text.index("]") + 1] + ' created by ' + item.reporter.get('username') + '</i>\n\n\n'
+        body += self._htmlentitydecode(item.description.text)
 
         try:
             attachment = item.attachments.attachment
             body += '\n\n```attachments\n' + tostring(item.attachments, pretty_print=True, encoding='unicode') + '\n```\n\n'
         except AttributeError:
             pass
-        
-        body += '\n<i>' + item.title.text[0:item.title.text.index("]") + 1] + ' created by ' + item.reporter.get('username') + '</i>'
 
         self._project['Issues'].append({'title': item.title.text,
                                         'key': item.key.text,
@@ -156,7 +156,7 @@ class Project:
             for comment in item.comments.comment:
                 self._project['Issues'][-1]['comments'].append(
                     {"created_at": self._convert_to_iso(comment.get('created')),
-                     "body": self._htmlentitydecode(comment.text) + '\n<i>by ' + comment.get('author') + '</i>'
+                     "body": '<i>by ' + comment.get('author') + '</i>\n\n\n' + self._htmlentitydecode(comment.text)
                      })
         except AttributeError:
             pass
