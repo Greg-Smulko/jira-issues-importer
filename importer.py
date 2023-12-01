@@ -116,7 +116,9 @@ class Importer:
         count = 0
 
         for issue in self.project.get_issues():
-            if start_from_count > count:
+            count += 1
+
+            if count < start_from_count:
                 continue
 
             print("Index = ", count)
@@ -136,7 +138,6 @@ class Importer:
                     dict((k, self._replace_jira_with_github_id(v)) for k, v in comment.items()))
 
             self.import_issue_with_comments(issue, comments)
-            count += 1
 
     def import_issue_with_comments(self, issue, comments):
         """
