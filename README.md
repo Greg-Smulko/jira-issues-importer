@@ -79,3 +79,13 @@ I took these as a starting point for this project. I restructured the code and a
 1. From results page, click on Export icon at the top right of page
 
 1. Select XML output and save file
+
+# Misc
+
+* Delete all default labels added to a new GitHub repo with:
+
+```bash
+REPO="org/repo"
+
+gh label list --repo $REPO --limit 1000 --json name --jq '.[].name' | xargs -n 1 -I % gh label delete % --repo $REPO --yes
+```
