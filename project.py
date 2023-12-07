@@ -9,7 +9,7 @@ class Project:
 
     def __init__(self, name, doneStatusCategoryId):
         self.name = name
-        self.doneStatusCategoryId = doneStatusCategoryId
+        self.doneStatusCategoryId = int(doneStatusCategoryId)
         self._project = {'Milestones': defaultdict(int), 'Components': defaultdict(
             int), 'Labels': defaultdict(int), 'Types': defaultdict(int), 'Issues': []}
 
@@ -75,7 +75,7 @@ class Project:
 
     def _append_item_to_project(self, item):
         # todo assignee
-        closed = str(item.statusCategory.get('id')) == self.doneStatusCategoryId
+        closed = int(item.statusCategory.get('id')) == self.doneStatusCategoryId
         closed_at = ''
         if closed:
             try:
